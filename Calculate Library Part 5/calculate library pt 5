@@ -1,0 +1,88 @@
+public class Quadratic {
+	public static String quadrDescriber(double a, double b, double c) {
+		String formula = a+"x^2+"+b+"x+"+c+"\n\n";
+		String direction;
+		if(a<0) {
+			direction = "Down \n";
+		}else if(a>0) {
+			direction = "Up \n";
+		}else{
+			direction = "Not a parabola \n";
+		}
+		String face = "Opens:"+ direction;
+		String symm = "Axis of Symmetry:" + (-1*b/(2*a))+"\n";
+		double x = (-1*b/(2*a));
+		String vert = "Vertex:("+x+","+(a*x*x+b*x+c)+")"+"\n";
+		String xIntercept = "x-intercept:" + quadForm(a, b, c)+"\n";
+		String yIntercept = "y-intercept:" + c;
+		String stuff = formula + face + symm + vert + xIntercept + yIntercept;
+		return stuff;
+	}
+	public static String symm(double a, double b, double c) {
+		if(discriminant(a, b, c) >= 0) {
+			double positive = round2((-b+sqrt(discriminant(a, b, c)))/-2/a);
+			double negative = round2((-b-sqrt(discriminant(a, b, c)))/-2/a);
+			double first;
+			double second;
+			if(positive != negative) {
+				first = min(positive, negative);
+			}else {
+				first = positive;
+			}
+			if(first == positive) {
+				second = negative;
+			String root1 = Double.toString(-1*first);
+			String root2 = Double.toString(-1*second);
+			if(root1.equals(root2)) {
+				return root1;
+			}else {
+				return root1 + "and" + root2;
+			}
+			}else {
+
+				return "no x-intercept";
+			}
+		}
+	}
+	public static String quadForm(double num1, double num2, double num3) {
+		//Takes numbers and puts them in the form of the quadratic formula to approximate real roots, if any.
+		if(discriminant(num1, num2, num3)<0) {
+			return "No real roots.";
+		}else if(discriminant(num1, num2, num3)==0) {
+			return round2(-1*num2/(2*num1))+"";
+		}else {
+			double opt1 = (((-1*num2)+sqrt(discriminant(num1, num2, num3))));
+			double opt2 = (((-1*num2)-sqrt(discriminant(num1, num2, num3))));
+			return round2(opt1)+" and "+round2(opt2);
+		}
+	}
+	public static double min(double a, double b) {
+		//returns the smaller number of two integers
+		if(a>b) {
+			return b;
+		}else{
+			return a;
+		}
+	}
+	public static double round2(double num) {
+		//rounds a double to the nearest hundreds place.
+		double up = num+0.005;
+		double decimalChange = up*100;
+		int move = (int) decimalChange;
+		return move/100.0;
+	}
+	public static double discriminant(double a, double b, double c) {
+		//writes out the discriminant portion of the quadratic formula
+		double discriminant = b*b-((4*a)*c);
+		return discriminant;
+	}
+	public static double sqrt(double num) {
+		// Finds the square root of a number.
+		if(num<0) throw new IllegalArgumentException("Negative numbers do not have a square root.");
+		int i=1;
+		while(i*i<num) {
+			i++;
+		}
+		return i;
+	}
+}
